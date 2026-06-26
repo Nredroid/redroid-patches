@@ -1,0 +1,46 @@
+#!/usr/bin/env python3
+import os
+import subprocess
+import sys
+from xml.etree import ElementTree
+
+
+def main(src: str, tag: str | None):
+    if not tag:
+        print("\033[33mDetect AOSP tag from manifest\033[0m")
+        if tag is None:
+            manifest_path = f"{src}/.repo/manifests/default.xml"
+            if not os.path.exists(manifest_path):
+                print("\033[31mManifest file not found, aborting\033[0m")
+                exit(1)
+            xml_root = ElementTree.parse(manifest_path).getroot()
+            tag_raw = None
+            for e in xml_root.findall("default"):
+                tag_raw = e.get("revision")
+            if tag_raw is None:
+                print("\033[33mNo tag detected.\033[0m")
+                exit(1)
+            tag = os.path.basename(tag_raw)
+    print(f"\033[34m===== AOSP SRC: {src}\033[0m")
+    print(f"\033[34m===== AOSP TAG: {tag}\033[0m")
+    patch_dir = os.path.dirname(sys.argv[0]) + tag
+    if not os.path.exists(patch_dir):
+        print(f"\033[33mpatches for {tag} not exist]\033[0m")
+        exit(1)
+    for root, dirs, _ in os.walk(patch_dir):
+        for dir_ in dirs:
+            p = os.path.join(root.replace(tag, '.')[2:], dir_)
+            if not (patches := [i for i in os.listdir(os.path.join(root, dir_)) if i.endswith(".patch")]):
+                continue
+            print(f"\033[32mPatching: {p}\033[0m")
+            ret = subprocess.run(
+                ["git", "-C", f"{src}/{p}", "am", "--reject", *[f"{patch_dir}/{p}/{i}" for i in patches]])
+            if ret.returncode != 0:
+                print(f"\033[31m[ERROR] Patch Failed: {p}\033[0m")
+
+
+if __name__ == "__main__":
+    if len(sys.argv) < 2:
+        print(f"{sys.argv[0]} AOSP-SRC [TAG]")
+        exit(1)
+    main(sys.argv[1], None if len(sys.argv) < 3 else sys.argv[2])
