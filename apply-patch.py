@@ -37,6 +37,22 @@ def main(src: str, tag: str | None):
                 ["git", "-C", f"{src}/{p}", "am", "--reject", *[f"{patch_dir}/{p}/{i}" for i in patches]], stdout=subprocess.PIPE)
             if ret.returncode != 0:
                 print(f"\033[31m[ERROR] Patch Failed: {p}\033[0m")
+                print(f"\033[33m[Reset] Reset: {p}\033[0m")
+                for sp in [
+                subprocess.run(
+                    ["git", "-C", f"{src}/{p}", "am", "--abort"],
+                    stdout=subprocess.PIPE)
+                , subprocess.run(
+                    ["git", "-C", f"{src}/{p}", "rebase", "--abort"],
+                    stdout=subprocess.PIPE)
+                , subprocess.run(
+                    ["git", "-C", f"{src}/{p}", "reset", "--hard", "HEAD"],
+                    stdout=subprocess.PIPE)
+                , subprocess.run(
+                    ["git", "-C", f"{src}/{p}", "clean", "-fd",],
+                    stdout=subprocess.PIPE)]:
+                    if sp.returncode != 0:
+                        print(f"\033[31m[ERROR] Reset Failed: {p}\033[0m")
 
 
 if __name__ == "__main__":
