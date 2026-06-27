@@ -1,0 +1,27 @@
+From d50a732fe1af67b489a165c964c05f1151cbfc24 Mon Sep 17 00:00:00 2001
+From: ColdWindScholar <3590361911@qq.com>
+Date: Sat, 27 Jun 2026 15:51:57 +0800
+Subject: [PATCH 2/3] fix booting
+
+---
+ bpf/loader/NetBpfLoad.cpp | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/bpf/loader/NetBpfLoad.cpp b/bpf/loader/NetBpfLoad.cpp
+index 7d6f58d..76ea751 100644
+--- a/bpf/loader/NetBpfLoad.cpp
++++ b/bpf/loader/NetBpfLoad.cpp
+@@ -1841,8 +1841,10 @@ static int doLoad(char** argv, char * const envp[]) {
+         ALOGE("If this triggers randomly, you might be hitting some memory allocation "
+               "problems or startup script race.");
+         ALOGE("--- DO NOT EXPECT SYSTEM TO BOOT SUCCESSFULLY ---");
++        #if 0 //hacked
+         sleep(20);
+         return 38;
++        #endif
+     }
+ 
+     auto end = steady_clock::now();
+-- 
+2.53.0
+

@@ -1,0 +1,25 @@
+From 2aa6aacd239a521a00164482f7e4c5f7b4557e15 Mon Sep 17 00:00:00 2001
+From: ColdWindScholar <3590361911@qq.com>
+Date: Sat, 27 Jun 2026 15:54:05 +0800
+Subject: [PATCH 3/3] ignore nativeSynchronizeKernelRCU error
+
+---
+ staticlibs/native/bpfmapjni/com_android_net_module_util_Bpf.cpp | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/staticlibs/native/bpfmapjni/com_android_net_module_util_Bpf.cpp b/staticlibs/native/bpfmapjni/com_android_net_module_util_Bpf.cpp
+index 055caa2..ca87311 100644
+--- a/staticlibs/native/bpfmapjni/com_android_net_module_util_Bpf.cpp
++++ b/staticlibs/native/bpfmapjni/com_android_net_module_util_Bpf.cpp
+@@ -139,7 +139,7 @@ static jboolean com_android_net_module_util_BpfMap_nativeFindMapEntry(JNIEnv *en
+ static jint com_android_net_module_util_BpfMap_nativeSynchronizeKernelRCU(JNIEnv *env,
+                                                                           jclass clazz) {
+     const int pfSocket = socket(AF_KEY, SOCK_RAW | SOCK_CLOEXEC, PF_KEY_V2);
+-    if (pfSocket < 0) return -errno;
++    if (pfSocket < 0) return 0;
+     // On Linux close() will always close the fd, any error it returns is a previous pending error.
+     if (close(pfSocket)) return -errno;  // in practice cannot fail
+     return 0;
+-- 
+2.53.0
+
