@@ -52,7 +52,8 @@ def main(src: str, tag: str | None):
                     ["git", "-C", f"{src}/{p}", "clean", "-fd",],
                     stdout=subprocess.PIPE)]:
                     if sp.returncode != 0:
-                        print(f"\033[31m[ERROR] Reset Failed: {p}\033[0m")
+                        print(f"\033[31m[ERROR] Reset Failed: {p}, try 'repo sync -f' to sync the official code.\033[0m")
+                        break
 
 
 if __name__ == "__main__":
