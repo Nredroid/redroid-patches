@@ -4,13 +4,13 @@ Date: Sun, 9 May 2021 23:09:00 +0800
 Subject: [PATCH 1/7] fix booting
 
 ---
- fs_mgr/libfstab/boot_config.cpp |  6 ++++--
+ libfstab/boot_config.cpp |  6 ++++--
  1 files changed, 6 insertions(+), 0 deletions(-)
 
-diff --git a/fs_mgr/libfstab/boot_config.cpp b/fs_mgr/libfstab/boot_config.cpp
+diff --git a/libfstab/boot_config.cpp b/libfstab/boot_config.cpp
 index b21495e..7993d15 100644
---- a/fs_mgr/libfstab/boot_config.cpp
-+++ b/fs_mgr/libfstab/boot_config.cpp
+--- a/libfstab/boot_config.cpp
++++ b/libfstab/boot_config.cpp
 @@ -154,13 +154,15 @@ bool GetKernelCmdlineFromString(const std::string& cmdline, const std::string& k
  
  void ImportKernelCmdline(const std::function<void(std::string, std::string)>& fn) {
