@@ -53,7 +53,7 @@ def main(src: str, tag: str | None):
                     if sp.returncode != 0:
                         print(f"\033[31m[ERROR] Reset Failed: {p}, try 'repo sync -f' to sync the official code.\033[0m")
                         break
-        print(f"\033[33m[Error Conclusion]Failed to Patch: {failed_patches}\033[0m")
+    print(f"\033[33m[Error Conclusion]Failed to Patch: {failed_patches}\033[0m")
 
 
 if __name__ == "__main__":
