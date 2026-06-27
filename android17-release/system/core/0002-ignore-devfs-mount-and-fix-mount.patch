@@ -1,0 +1,43 @@
+From 104fc7164c004f769c3735f35119fe5f708ccd37 Mon Sep 17 00:00:00 2001
+From: ColdWindScholar <3590361911@qq.com>
+Date: Sat, 27 Jun 2026 16:14:52 +0800
+Subject: [PATCH 2/3] ignore devfs mount and fix mount
+
+---
+ init/first_stage_init.cpp | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
+
+diff --git a/init/first_stage_init.cpp b/init/first_stage_init.cpp
+index d8b2c49..f38599e 100644
+--- a/init/first_stage_init.cpp
++++ b/init/first_stage_init.cpp
+@@ -350,7 +350,6 @@ int FirstStageMain(int argc, char** argv) {
+     CHECKCALL(setenv("PATH", _PATH_DEFPATH, 1));
+     // Get the basic filesystem setup we need put together in the initramdisk
+     // on / and then we'll let the rc file figure out the rest.
+-    CHECKCALL(mount("tmpfs", "/dev", "tmpfs", MS_NOSUID, "mode=0755"));
+     CHECKCALL(mkdir("/dev/pts", 0755));
+     CHECKCALL(mkdir("/dev/socket", 0755));
+     CHECKCALL(mkdir("/dev/dm-user", 0755));
+@@ -540,6 +539,7 @@ int FirstStageMain(int argc, char** argv) {
+         if (!fsm) {
+             fsm = CreateFirstStageMount(cmdline);
+         }
++        #if 0
+         if (!fsm) {
+             LOG(FATAL) << "FirstStageMount not available";
+         }
+@@ -551,8 +551,9 @@ int FirstStageMain(int argc, char** argv) {
+         }
+ 
+         if (!fsm->DoFirstStageMount()) {
+-            LOG(FATAL) << "Failed to mount required partitions early ...";
++            LOG(ERROR) << "Failed to mount required partitions early ...";
+         }
++        #endif
+     }
+ 
+     struct stat new_root_info{};
+-- 
+2.53.0
+
