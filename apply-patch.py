@@ -29,7 +29,7 @@ def main(src: str, tag: str | None):
         exit(1)
     for root, dirs, _ in os.walk(patch_dir):
         for dir_ in dirs:
-            p = os.path.join(os.path.basename(root), dir_)
+            p = os.path.join(root.replace(patch_dir, "")[1:], dir_)
             if not (patches := [i for i in os.listdir(os.path.join(root, dir_)) if i.endswith(".patch")]):
                 continue
             print(f"\033[32mPatching: {p}\033[0m")
