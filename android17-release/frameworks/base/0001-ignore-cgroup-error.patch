@@ -4,13 +4,13 @@ Date: Sat, 27 Jun 2026 13:06:13 +0800
 Subject: [PATCH] ignore cgroup error
 
 ---
- ProcessList.java | 2 +-
+ services/core/java/com/android/server/am/ProcessList.java | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/ProcessList.java b/ProcessList.java
+diff --git a/services/core/java/com/android/server/am/ProcessList.java b/services/core/java/com/android/server/am/ProcessList.java
 index d8e2cfa..8ecb301 100644
---- a/ProcessList.java
-+++ b/ProcessList.java
+--- a/services/core/java/com/android/server/am/ProcessList.java
++++ b/services/core/java/com/android/server/am/ProcessList.java
 @@ -2694,7 +2694,7 @@ public final class ProcessList extends ProcessListInternal
                              if (res == -OsConstants.ESRCH) {
                                  Slog.e(ActivityManagerService.TAG, errorStr);
