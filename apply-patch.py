@@ -34,9 +34,9 @@ def main(src: str, tag: str | None):
                 continue
             print(f"\033[32mPatching: {p}\033[0m")
             ret = subprocess.run(
-                ["git", "-C", f"{src}/{p}", "am", "--reject", *[f"{patch_dir}/{p}/{i}" for i in patches]], stdout=subprocess.STDOUT, stderr=subprocess.DEVNULL)
+                ["git", "-C", f"{src}/{p}", "am", "--reject", *[f"{patch_dir}/{p}/{i}" for i in patches]], stdout=subprocess.PIPE)
             if ret.returncode != 0:
-                print(f"\033[31m[ERROR] Patch Failed: {p}\nReason:{ret.stdout}\033[0m")
+                print(f"\033[31m[ERROR] Patch Failed: {p}\033[0m")
 
 
 if __name__ == "__main__":
