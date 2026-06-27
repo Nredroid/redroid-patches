@@ -23,13 +23,13 @@ def main(src: str, tag: str | None):
             tag = os.path.basename(tag_raw)
     print(f"\033[34m===== AOSP SRC: {src}\033[0m")
     print(f"\033[34m===== AOSP TAG: {tag}\033[0m")
-    patch_dir = os.path.dirname(sys.argv[0]) + tag
+    patch_dir = os.path.dirname(sys.argv[0])+os.sep + tag
     if not os.path.exists(patch_dir):
-        print(f"\033[33mpatches for {tag} not exist]\033[0m")
+        print(f"\033[33mpatches({patch_dir}) for {tag} not exist\033[0m")
         exit(1)
     for root, dirs, _ in os.walk(patch_dir):
         for dir_ in dirs:
-            p = os.path.join(root.replace(tag, '.')[2:], dir_)
+            p = os.path.join(os.path.basename(root), dir_)
             if not (patches := [i for i in os.listdir(os.path.join(root, dir_)) if i.endswith(".patch")]):
                 continue
             print(f"\033[32mPatching: {p}\033[0m")

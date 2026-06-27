@@ -1,0 +1,34 @@
+From a74c433d22faa74ec7d16fd7b7f5cdbcbc4aaef8 Mon Sep 17 00:00:00 2001
+From: Ziyang Zhou <ziyang.zhou@outlook.com>
+Date: Sun, 9 May 2021 23:09:00 +0800
+Subject: [PATCH 1/7] fix booting
+
+---
+ fs_mgr/libfstab/boot_config.cpp |  6 ++++--
+ 1 files changed, 6 insertions(+), 0 deletions(-)
+
+diff --git a/fs_mgr/libfstab/boot_config.cpp b/fs_mgr/libfstab/boot_config.cpp
+index b21495e..7993d15 100644
+--- a/fs_mgr/libfstab/boot_config.cpp
++++ b/fs_mgr/libfstab/boot_config.cpp
+@@ -154,13 +154,15 @@ bool GetKernelCmdlineFromString(const std::string& cmdline, const std::string& k
+ 
+ void ImportKernelCmdline(const std::function<void(std::string, std::string)>& fn) {
+     std::string cmdline;
+-    android::base::ReadFileToString("/proc/cmdline", &cmdline);
++    android::base::ReadFileToString("/proc/self/cmdline", &cmdline); // HACKED
++    std::replace(cmdline.begin(), cmdline.end(), '\0', ' '); // HACKED
+     ImportKernelCmdlineFromString(android::base::Trim(cmdline), fn);
+ }
+ 
+ bool GetKernelCmdline(const std::string& key, std::string* out) {
+     std::string cmdline;
+-    android::base::ReadFileToString("/proc/cmdline", &cmdline);
++    android::base::ReadFileToString("/proc/self/cmdline", &cmdline); // HACKED
++    std::replace(cmdline.begin(), cmdline.end(), '\0', ' '); // HACKED
+     return GetKernelCmdlineFromString(android::base::Trim(cmdline), key, out);
+ }
+
+-- 
+2.49.0
+
