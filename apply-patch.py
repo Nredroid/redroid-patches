@@ -43,9 +43,6 @@ def main(src: str, tag: str | None):
                     ["git", "-C", f"{src}/{p}", "am", "--abort"],
                     stdout=subprocess.PIPE)
                 , subprocess.run(
-                    ["git", "-C", f"{src}/{p}", "rebase", "--abort"],
-                    stdout=subprocess.PIPE)
-                , subprocess.run(
                     ["git", "-C", f"{src}/{p}", "reset", "--hard", "HEAD"],
                     stdout=subprocess.PIPE)
                 , subprocess.run(
