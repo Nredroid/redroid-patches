@@ -1,6 +1,6 @@
-From c237d9bed4f26136f8687b539a8836a2ab07158c Mon Sep 17 00:00:00 2001
-From: Ziyang Zhou <ziyang.zhou@outlook.com>
-Date: Sat, 6 Aug 2022 10:19:11 +0800
+From c9dda8339b59cc3cfe2d4c4bbd2e423e5bfd6cff Mon Sep 17 00:00:00 2001
+From: ColdWindScholar <3590361911@qq.com>
+Date: Sat, 27 Jun 2026 15:26:37 +0800
 Subject: [PATCH] ignore project quota error
 
 ---
@@ -8,17 +8,17 @@ Subject: [PATCH] ignore project quota error
  1 file changed, 1 deletion(-)
 
 diff --git a/Utils.cpp b/Utils.cpp
-index 9ad828c..b4ebc7a 100644
+index a55a57e..0ccd444 100644
 --- a/Utils.cpp
 +++ b/Utils.cpp
-@@ -263,7 +263,6 @@ int SetQuotaProjectId(const std::string& path, long projectId) {
-        }
-        PLOG(ERROR) << "Failed to set project id on " << path;
+@@ -262,7 +262,6 @@ int SetQuotaProjectId(const std::string& path, long projectId) {
+             return 0; // swallow
+         }
+         PLOG(ERROR) << "Failed to set project id on " << path;
 -        return ret;
-    }
-    return 0;
-}
- 
+     }
+     return 0;
+ }
 -- 
-2.49.0
+2.53.0
 
