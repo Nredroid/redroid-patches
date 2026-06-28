@@ -44,7 +44,7 @@ index 8b94699..d8b2c49 100644
  
      const char* path = "/system/bin/init";
 -    const char* args[] = {path, "selinux_setup", nullptr};
-+    const char* args[] = {path, "selinux_setup", nullptr};std::vector<const char *> args = {path, "second_stage"};
++    std::vector<const char *> args = {path, "second_stage"};
 +    std::string init_cmdline;
 +    android::base::ReadFileToString("/proc/self/cmdline", &init_cmdline);
 +    std::replace(init_cmdline.begin(), init_cmdline.end(), '\0', ' ');
