@@ -8,9 +8,9 @@ Change-Id: I87b1c6fca9361a66a021a3dc484f4d69224744a8
  server/BandwidthController.cpp       | 1 +
  server/Controllers.cpp               | 2 --
  server/IptablesRestoreController.cpp | 1 +
- server/TetherController.cpp          | 2 ++
+ server/TetherController.cpp          | 3 ++
  server/main.cpp                      | 1 -
- 5 files changed, 4 insertions(+), 3 deletions(-)
+ 5 files changed, 4 insertions(+), 4 deletions(-)
 
 diff --git a/server/BandwidthController.cpp b/server/BandwidthController.cpp
 index 8a96738..f1cbf14 100644
@@ -63,7 +63,8 @@ index b159d95..a582cd8 100644
 @@ -913,9 +913,11 @@ StatusOr<TetherController::TetherStatsList> TetherController::getTetherStats() {
          }
  
-         if (int ret = addForwardChainStats(statsList, statsString, parsedIptablesOutput)) {
+-         if (int ret = addForwardChainStats(statsList, statsString, parsedIptablesOutput)) {
++         if (addForwardChainStats(statsList, statsString, parsedIptablesOutput)) {
 +#if 0
              return statusFromErrno(-ret, StringPrintf("failed to parse %s tether stats:\n%s",
                                                        target == V4 ? "IPv4": "IPv6",
