@@ -1,0 +1,32 @@
+From 1fd89241d677e39a6b1f81d13e88fed65aa74b59 Mon Sep 17 00:00:00 2001
+From: teddynight <tanyuliang2@gmail.com>
+Date: Thu, 8 Jan 2026 23:29:37 +0800
+Subject: [PATCH 8/8] remove ashmem-memfd compat check
+
+Change-Id: I8b54a1322bf36cf0196dca44a3332738be7a3640
+---
+ libcutils/ashmem-dev.cpp | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/libcutils/ashmem-dev.cpp b/libcutils/ashmem-dev.cpp
+index f4d9e2a..f940a27 100644
+--- a/libcutils/ashmem-dev.cpp
++++ b/libcutils/ashmem-dev.cpp
+@@ -138,12 +138,14 @@ static bool __has_memfd_support() {
+      * Ensure that the kernel supports ashmem ioctl commands on memfds. If not,
+      * fall back to using ashmem.
+      */
++#if 0
+     int ashmem_size = TEMP_FAILURE_RETRY(ioctl(fd, ASHMEM_GET_SIZE, 0));
+     if (ashmem_size != static_cast<int>(buf_size)) {
+         ALOGE("ioctl(ASHMEM_GET_SIZE): %d != buf_size: %zd , no ashmem-memfd compat support",
+               ashmem_size, buf_size);
+         return false;
+     }
++#endif
+ 
+     if (debug_log) {
+         ALOGD("memfd: device has memfd support, using it");
+-- 
+2.47.1
+
