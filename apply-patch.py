@@ -28,7 +28,7 @@ def main(src: str, tag: str | None):
     #Check if in shared patches
     for k, v in shared_patches.items():
         if tag in v:
-            print(f"\033[32m{tag} shared {k} PATCHES.\033[0m")
+            print(f"\033[33m[Notice] {tag} shared {k} patches.\033[0m")
             tag = k
             break
 
