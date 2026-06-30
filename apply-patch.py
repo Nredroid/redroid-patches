@@ -3,8 +3,11 @@ import os
 import subprocess
 import sys
 from xml.etree import ElementTree
-
-
+shared_patches: dict = {
+    "android-12.0.0_r32": ["android-12.0.0_r34"],
+    "android-13.0.0_r82": ["android-13.0.0_r83"],
+    "android-14.0.0_r2": ["android-14.0.0_r11", "android-14.0.0_r15", "android-14.0.0_r21"]
+}
 def main(src: str, tag: str | None):
     failed_patches = []
     if not tag:
@@ -22,6 +25,12 @@ def main(src: str, tag: str | None):
                 print("\033[33mNo tag detected.\033[0m")
                 exit(1)
             tag = os.path.basename(tag_raw)
+    #Check if in shared patches
+    for k, v in shared_patches.items():
+        if tag in v:
+            tag = k
+            break
+
     print(f"\033[34m===== AOSP SRC: {src}\033[0m")
     print(f"\033[34m===== AOSP TAG: {tag}\033[0m")
     patch_dir = os.path.dirname(sys.argv[0])+os.sep + tag
