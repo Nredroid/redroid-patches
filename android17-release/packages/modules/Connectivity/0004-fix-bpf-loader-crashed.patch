@@ -39,4 +39,6 @@ index 70991ebad3..9090bf6b4e 100644
 +    fatal = false;
      if (fatal) abort();
  }
- 
+
+---
+2.49.0
