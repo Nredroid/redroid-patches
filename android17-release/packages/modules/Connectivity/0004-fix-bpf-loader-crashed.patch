@@ -1,0 +1,42 @@
+From 2aa6aacd239a521a00164482f7e4c5f7b4557e15 Mon Sep 17 00:00:00 2001
+From: ColdWindScholar <3590361911@qq.com>
+Date: Sat, 27 Jun 2026 15:54:05 +0800
+Subject: [PATCH 1/1] Fix bpf loader crashed
+
+---
+ bpf/loader/NetBpfLoad.cpp | 2 +-
+ 1 file changed, 3 insertion(+), 3 deletion(-)
+
+diff --git a/bpf/loader/NetBpfLoad.cpp b/bpf/loader/NetBpfLoad.cpp
+index 76ea751978..6324ea5499 100644
+--- a/bpf/loader/NetBpfLoad.cpp
++++ b/bpf/loader/NetBpfLoad.cpp
+@@ -1789,13 +1789,13 @@ static int doLoad(char** argv, char * const envp[]) {
+         uint32_t progId = bpfGetNextProgId(0);  // expect 0 with errno == ENOENT
+         if (progId || errno != ENOENT) {
+             ALOGE("bpfGetNextProgId(zero) returned %u (errno %d)", progId, errno);
+-            return 32;
++
+         }
+         errno = 0;
+         uint32_t mapId = bpfGetNextMapId(0);  // expect 0 with errno == ENOENT
+         if (mapId || errno != ENOENT) {
+             ALOGE("bpfGetNextMapId(zero) returned %u (errno %d)", mapId, errno);
+-            return 33;
++            
+         }
+     } else if (isAtLeastKernelVersion(4, 14)) {  // implies S through U QPR2
+         // bpfGetNext{Prog,Map}Id require 4.14+
+diff --git a/service/jni/com_android_server_connectivity_ClatCoordinator.cpp b/service/jni/com_android_server_connectivity_ClatCoordinator.cpp
+index 70991ebad3..9090bf6b4e 100644
+--- a/service/jni/com_android_server_connectivity_ClatCoordinator.cpp
++++ b/service/jni/com_android_server_connectivity_ClatCoordinator.cpp
+@@ -131,7 +131,7 @@ static void verifyClatPerms() {
+     V2("map_clatd_clat_ingress6_map",             S_IFREG|0660, MAP_RW);
+ 
+ #undef V2
+-
++    fatal = false;
+     if (fatal) abort();
+ }
+ 

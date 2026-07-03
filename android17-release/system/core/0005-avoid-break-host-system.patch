@@ -1,0 +1,55 @@
+diff --git a/init/reboot.cpp b/init/reboot.cpp
+index 1f2381d85..c3c902cf0 100644
+--- a/init/reboot.cpp
++++ b/init/reboot.cpp
+@@ -992,6 +992,7 @@ static void DoReboot(unsigned int cmd, const std::string& reason,
+     if (!is_thermal_shutdown) std::this_thread::sleep_for(100ms);
+ 
+     // Reboot regardless of umount status. If umount fails, fsck after reboot will fix it.
++    #if 0
+     std::string data_fs_type = GetDataFsType();
+     if (!data_fs_type.empty()) {
+         // Do not delete: Critical log for reboot_fs_integrity_test.
+@@ -1020,6 +1021,7 @@ static void DoReboot(unsigned int cmd, const std::string& reason,
+             LOG(ERROR) << "Unknown /data fs type: " << data_fs_type;
+         }
+     }
++    #endif
+ 
+     LogShutdownTime(stat, t);
+     RebootSystem(cmd, reboot_target, reason);
+diff --git a/libprocessgroup/processgroup.cpp b/libprocessgroup/processgroup.cpp
+index 7648c2109..088280893 100644
+--- a/libprocessgroup/processgroup.cpp
++++ b/libprocessgroup/processgroup.cpp
+@@ -708,12 +708,12 @@ static int createProcessGroupInternal(uid_t uid, pid_t initialPid, std::string c
+ 
+     if (!MkdirAndChown(uid_path, cgroup_mode, cgroup_uid, cgroup_gid)) {
+         PLOG(ERROR) << "Failed to make and chown " << uid_path;
+-        return -errno;
++        return 0;
+     }
+     if (activate_controllers) {
+         if (!CgroupMap::GetInstance().ActivateControllers(uid_path)) {
+             PLOG(ERROR) << "Failed to activate controllers in " << uid_path;
+-            return -errno;
++            return 0;
+         }
+     }
+ 
+@@ -721,13 +721,13 @@ static int createProcessGroupInternal(uid_t uid, pid_t initialPid, std::string c
+ 
+     if (!MkdirAndChown(uid_pid_path, cgroup_mode, cgroup_uid, cgroup_gid)) {
+         PLOG(ERROR) << "Failed to make and chown " << uid_pid_path;
+-        return -errno;
++        return 0;
+     }
+ 
+     auto uid_pid_procs_file = uid_pid_path + '/' + PROCESSGROUP_CGROUP_PROCS_FILE;
+ 
+     if (!WriteStringToFile(std::to_string(initialPid), uid_pid_procs_file)) {
+-        ret = -errno;
++        ret = 0;
+         PLOG(ERROR) << "Failed to write '" << initialPid << "' to " << uid_pid_procs_file;
+     }
+ 
