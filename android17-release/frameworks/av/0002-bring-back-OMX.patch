@@ -5970,7 +5970,7 @@ index 0000000..3891f23
 +             * to start of current decode() */
 +            timeDelay = mTimeStart - mTimeEnd;
 +
-+            IV_API_CALL_STATUS_T status;
++            [[maybe_unused]] IV_API_CALL_STATUS_T status;
 +            status = ivdec_api_function(mCodecCtx, (void *)&s_dec_ip, (void *)&s_dec_op);
 +
 +            bool unsupportedResolution =
@@ -15021,7 +15021,7 @@ index 0000000..9f8001f
 +             * to start of current decode() */
 +            TIME_DIFF(mTimeEnd, mTimeStart, timeDelay);
 +
-+            IV_API_CALL_STATUS_T status;
++            [[maybe_unused]] IV_API_CALL_STATUS_T status;
 +            status = ivdec_api_function(mCodecCtx, (void *)&s_dec_ip, (void *)&s_dec_op);
 +
 +            bool unsupportedDimensions = (IMPEG2D_UNSUPPORTED_DIMENSIONS == s_dec_op.u4_error_code);
