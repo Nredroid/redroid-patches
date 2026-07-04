@@ -7090,7 +7090,7 @@ index 0000000..01174c9
 +
 +    /* Allocating Memory for Mem Records */
 +    {
-+        WORD32 total_size;
++        [[maybe_unused]] WORD32 total_size;
 +        iv_mem_rec_t *ps_mem_rec;
 +        total_size = 0;
 +        ps_mem_rec = mMemRecords;
