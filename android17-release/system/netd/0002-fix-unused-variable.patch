@@ -1,0 +1,20 @@
+From 37e20b445a0a05fa8e01678d1266d10214ed8af4 Mon Sep 17 00:00:00 2001
+From: Ziyang Zhou <ziyang.zhou@outlook.com>
+Date: Sun, 9 May 2021 23:04:00 +0800
+Subject: [PATCH] fix-unused-variable
+---
+diff --git a/server/TetherController.cpp b/server/TetherController.cpp
+index a582cd83..0fa3b5e5 100644
+--- a/server/TetherController.cpp
++++ b/server/TetherController.cpp
+@@ -912,7 +912,7 @@ StatusOr<TetherController::TetherStatsList> TetherController::getTetherStats() {
+                                                       target, ret));
+         }
+ 
+-        if (int ret = addForwardChainStats(statsList, statsString, parsedIptablesOutput)) {
++        if (addForwardChainStats(statsList, statsString, parsedIptablesOutput)) {
+ #if 0
+             return statusFromErrno(-ret, StringPrintf("failed to parse %s tether stats:\n%s",
+                                                       target == V4 ? "IPv4": "IPv6",
+---
+2.53.0
