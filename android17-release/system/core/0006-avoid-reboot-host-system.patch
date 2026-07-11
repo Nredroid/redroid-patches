@@ -1,0 +1,20 @@
+From 37e20b445a0a05fa8e01678d1266d10214ed8af4 Mon Sep 17 00:00:00 2001
+From: Ziyang Zhou <ziyang.zhou@outlook.com>
+Date: Sun, 9 May 2021 23:04:00 +0800
+Subject: [PATCH] avoid-reboot-host-system
+---
+diff --git a/init/reboot_utils.cpp b/init/reboot_utils.cpp
+index 5c402fec1..7c3f3d606 100644
+--- a/init/reboot_utils.cpp
++++ b/init/reboot_utils.cpp
+@@ -104,7 +104,7 @@ void __attribute__((noreturn)) RebootSystem(unsigned int cmd, const std::string&
+                                             const std::string& reboot_reason) {
+     LOG(INFO) << "Reboot ending, jumping to kernel";
+ 
+-    if (!IsRebootCapable()) {
++    if (true) {
+         // On systems where init does not have the capability of rebooting the
+         // device, just exit cleanly.
+         exit(0);
+---
+2.53.0
