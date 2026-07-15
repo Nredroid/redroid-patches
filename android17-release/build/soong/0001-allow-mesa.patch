@@ -11,7 +11,7 @@ index 3cccfcaef..7fda0f2b2 100644
  
  var androidmk_allowlist []string = []string{
  	"bootable/deprecated-ota/updater/Android.mk",
-+	"external/mesa/android/Android.mk",
++	"external/mesa3d/android/Android.mk",
  }
  
  func getAllLines(ctx Context, filename string) []string {
