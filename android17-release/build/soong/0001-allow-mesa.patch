@@ -1,0 +1,19 @@
+From 37e20b445a0a05fa8e01678d1266d10214ed8af4 Mon Sep 17 00:00:00 2001
+From: Ziyang Zhou <ziyang.zhou@outlook.com>
+Date: Sun, 9 May 2021 23:04:00 +0800
+Subject: [PATCH] allow-mesa
+---
+diff --git a/ui/build/androidmk_denylist.go b/ui/build/androidmk_denylist.go
+index 3cccfcaef..7fda0f2b2 100644
+--- a/ui/build/androidmk_denylist.go
++++ b/ui/build/androidmk_denylist.go
+@@ -61,6 +61,7 @@ var androidmk_denylist []string = []string{
+ 
+ var androidmk_allowlist []string = []string{
+ 	"bootable/deprecated-ota/updater/Android.mk",
++	"external/mesa/android/Android.mk",
+ }
+ 
+ func getAllLines(ctx Context, filename string) []string {
+---
+2.53.0
