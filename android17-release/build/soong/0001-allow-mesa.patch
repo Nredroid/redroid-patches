@@ -1,10 +1,22 @@
 From 37e20b445a0a05fa8e01678d1266d10214ed8af4 Mon Sep 17 00:00:00 2001
 From: Ziyang Zhou <ziyang.zhou@outlook.com>
 Date: Sun, 9 May 2021 23:04:00 +0800
-Subject: [PATCH] allow-mesa
+Subject: [PATCH] fix build
 ---
+diff --git a/android/plugin.go b/android/plugin.go
+index 8a0a69272..79970c98b 100644
+--- a/android/plugin.go
++++ b/android/plugin.go
+@@ -60,6 +60,7 @@ var allowedPluginsByName = map[string]bool{
+ 	"soong-java-config-error_prone":          true,
+ 	"soong-libchrome":                        true,
+ 	"soong-llvm":                             true,
++	"soong-llvm22":                           true,
+ 	"soong-noto-fonts":                       true,
+ 	"soong-robolectric":                      true,
+ 	"soong-sdv_binary_pdk":                   true,
 diff --git a/ui/build/androidmk_denylist.go b/ui/build/androidmk_denylist.go
-index 3cccfcaef..7fda0f2b2 100644
+index 3cccfcaef..26ea92b09 100644
 --- a/ui/build/androidmk_denylist.go
 +++ b/ui/build/androidmk_denylist.go
 @@ -61,6 +61,7 @@ var androidmk_denylist []string = []string{
