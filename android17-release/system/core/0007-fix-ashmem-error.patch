@@ -1,0 +1,27 @@
+From 37e20b445a0a05fa8e01678d1266d10214ed8af4 Mon Sep 17 00:00:00 2001
+From: Ziyang Zhou <ziyang.zhou@outlook.com>
+Date: Sun, 9 May 2021 23:04:00 +0800
+Subject: [PATCH] fix ashmem error
+---
+diff --git a/libcutils/ashmem-dev.cpp b/libcutils/ashmem-dev.cpp
+index 3b3eba082..5d6d8cdfa 100644
+--- a/libcutils/ashmem-dev.cpp
++++ b/libcutils/ashmem-dev.cpp
+@@ -198,8 +198,13 @@ static bool is_memfd_fd(int fd) {
+     std::string fd_path = android::base::StringPrintf("/proc/self/fd/%d", fd);
+     std::string result;
+     if (!android::base::Readlink(fd_path, &result)) {
+-        ALOGE("readlink(%s) failed: %m", fd_path.c_str());
+-        return false;
++        if (errno == EPERM) {
++            ALOGE("readlink(%s) failed: %m", fd_path.c_str());
++            return true;
++        } else {
++            ALOGE("readlink(%s) failed: %m", fd_path.c_str());
++            return false;
++        }
+     }
+     return result.starts_with("/memfd:");
+ }
+---
+2.53.0
