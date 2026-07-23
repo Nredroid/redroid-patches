@@ -8,8 +8,9 @@ shared_patches: dict = {
     "android-13.0.0_r82": ["android-13.0.0_r83"],
     "android-14.0.0_r2": ["android-14.0.0_r11", "android-14.0.0_r15", "android-14.0.0_r21"]
 }
-def main(src: str, tag: str | None):
+def main(src: str, special_path : str | None):
     failed_patches = []
+    tag = None
     if not tag:
         print("\033[33mDetect AOSP tag from manifest\033[0m")
         if tag is None:
@@ -38,7 +39,7 @@ def main(src: str, tag: str | None):
     if not os.path.exists(patch_dir):
         print(f"\033[33mpatches({patch_dir}) for {tag} not exist\033[0m")
         exit(1)
-    for root, dirs, _ in os.walk(patch_dir):
+    for root, dirs, _ in os.walk(str(os.path.join(patch_dir, special_path)) if special_path else patch_dir):
         for dir_ in dirs:
             p = os.path.join(root.replace(patch_dir, "")[1:], dir_)
             if not (patches := [i for i in os.listdir(os.path.join(root, dir_)) if i.endswith(".patch")]):
@@ -71,6 +72,6 @@ def main(src: str, tag: str | None):
 
 if __name__ == "__main__":
     if len(sys.argv) < 2:
-        print(f"{sys.argv[0]} AOSP-SRC [TAG]")
+        print(f"{sys.argv[0]} AOSP-SRC [PATH]")
         exit(1)
     main(sys.argv[1], None if len(sys.argv) < 3 else sys.argv[2])
