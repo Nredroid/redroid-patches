@@ -1,5 +1,5 @@
 patches for redroid
 
-Usage: apply-patch.py AOSP-SRC [TAG]
+Usage: apply-patch.py AOSP-SRC [PATH]
 
-e.g: apply-patch.py ./aosp8 android-8.1.0_r81
+e.g: apply-patch.py ./aosp8 device
